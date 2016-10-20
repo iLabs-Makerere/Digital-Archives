@@ -1,0 +1,75 @@
+{% extends "../views/manage/layout.html" %}
+
+{% block content %}
+
+    <header class="manage">
+        <h1 class="pull-left">Categories</h1>
+        <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#category">Add category</button>
+    </header>
+    <table class="table table-bordered table-striped table-borderlined">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th width="100px"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ escape(category[1]) }} </td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="category" value="{{ category[0] }}">
+                        <input type="hidden" name="action" value="view">
+                        <button type="submit" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-eye-open"></i></button>
+                    </form>
+                    <form method="POST">
+                        <input type="hidden" name="category" value="{{ category[0] }}">
+                        <input type="hidden" name="action" value="edit">
+                        <button type="submit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i></button>
+                    </form>
+                    <form method="POST">
+                        <input type="hidden" name="category" value="{{ category[0] }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% end %}
+        </tbody>
+    </table>
+    <ul class = "pagination">
+        {% if prev_page > 0 %}
+
+            <li class = "pull-left"><a href ="?page={{prev_page}}">&laquo; Previous</a></li>
+        {% end %}
+
+        {% if next_page > 0 %}
+            <li class = "pull-right"><a href = "?page={{next_page}}">Next &raquo;</a></li>
+        {% end %}
+    </ul>
+
+    <div class="modal fade" id="category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Category</h4>
+                </div>
+                <form method="post" action="">
+                    <div class="modal-body">
+
+                            <div class="form-group">
+                                <input name="category" class="form-control" placeholder="Category title">
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-sm btn-success" value="Add Category">
+                        <input type="hidden" name="action" value="add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% end %}

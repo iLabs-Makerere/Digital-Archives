@@ -1,0 +1,72 @@
+{% extends "../views/manage/layout.html" %}
+
+{% block content %}
+
+    <header class="manage">
+        <h1 class="pull-left">Users</h1>
+        <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#adduser">Add user</button>
+    </header>
+    <table class="table table-bordered table-striped table-borderlined">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th width="100px"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ escape(user[0])+' '+escape(user[1])}}</td>
+                <td>{{ escape(user[2]) }}</td>
+                <td>{{ escape(user[7]) }}</td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="user" value="{{ user[2] }}">
+                        <input type="hidden" name="action" value="edit">
+                        <button type="submit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i></button>
+                    </form>
+                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
+                        <input type="hidden" name="user" value="{{ user[2] }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% end %}
+        </tbody>
+    </table>
+    <ul class = "pagination">
+        {% if prev_page > 0 %}
+        
+            <li class = "pull-left"><a href ="?page={{prev_page}}">&laquo; Previous</a></li>
+        {% end %}
+        
+        {% if next_page > 0 %}
+            <li class = "pull-right"><a href = "?page={{next_page}}">Next &raquo;</a></li>
+        {% end %} 
+    </ul>
+
+<div class="modal fade" id="adduser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add User</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="">
+                    <div class="form-group">
+                        <input name="user" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-sm btn-success">
+                <input type="hidden" name="action" value="add">
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

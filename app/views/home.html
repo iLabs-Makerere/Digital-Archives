@@ -1,0 +1,24 @@
+{% extends "../views/layout.html" %}
+
+{% block content %}
+    <ul class="books">
+    {% for book in books %}
+        <li>
+            <h3 class="title"><a href="/book/{{ escape(str(book[7])) }}">{{ book[0].title() }}</a></h3>
+            <h4 class="author"><small>by</small> {{ escape(book[2]) }}</h4>
+            <p class="excerpt">{{ escape(book[1]) }}</p>
+        </li>
+    {% end %}
+    </ul>
+    
+    <ul class = "pagination">
+        {% if prev_page > 0 %}
+        
+            <li class = "pull-left"><a href ="?page={{prev_page}}">&laquo; Previous</a></li>
+        {% end %}
+        
+        {% if next_page > 0 %}
+            <li class = "pull-right"><a href = "?page={{next_page}}">Next &raquo;</a></li>
+        {% end %} 
+    </ul>
+{% end %}

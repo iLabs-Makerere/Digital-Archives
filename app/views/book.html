@@ -1,0 +1,9 @@
+{% extends "../views/layout.html" %}
+
+{% block content %}
+    <div></div>
+    <div class="book row">
+        <iframe class="document" src="http://{{ request.host }}/viewer/web/viewer.html?file={{ static_url("files/") }}{{ escape(str(book[6])) }}" frameborder="0" allowfullscreen webkitallowfullscreen></iframe>
+    </div>
+    
+{% end %}

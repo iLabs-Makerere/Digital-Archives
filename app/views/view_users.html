@@ -1,0 +1,29 @@
+{% extends "../views/layout.html" %}
+
+{% block content %}
+   
+
+    <table width="100%" border="0" class="table table-striped">
+        <th>First Name</th>
+         <th>Last Name</th>
+          <th>Email</th>
+           <th>Gender</th>
+            <th>Role</th>
+
+    
+        {% for user in users %}
+        
+        <tr>
+        
+            <td><b>{{ escape(user[1]) }}</b></td>
+            <td><b>{{ escape(user[2]) }}</b></td>
+            <td>{{ escape(user[3]) }}</td>
+            <td>{{ escape(user[7]) }}</td>
+            <td>{{ escape(user[9]) }}</td>
+        <tr>
+        {% end %}
+    </table>
+    
+    
+    
+{% end %}

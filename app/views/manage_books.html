@@ -1,0 +1,117 @@
+{% extends "../views/manage/layout.html" %}
+
+{% block content %}
+
+    <header class="manage">
+        <h1 class="pull-left">Books</h1>
+        <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#publish">Publish</button>
+    </header>
+    <table class="table table-bordered table-striped table-borderlined">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th width="100px"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ escape(book[0]) }}</td>
+                <td>{{ escape(book[2]) }}</td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="book" value="{{ book[0] }}">
+                        <input type="hidden" name="action" value="view">
+                        <button type="submit" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-eye-open"></i></button>
+                    </form>
+                    <form method="POST">
+                        <input type="hidden" name="book" value="{{ book[0] }}">
+                        <input type="hidden" name="action" value="edit">
+                        <button type="submit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i></button>
+                    </form>
+                    <form method="POST">
+                        <input type="hidden" name="book" value="{{ book[0] }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% end %}
+        </tbody>
+    </table>
+    <ul class = "pagination">
+        {% if prev_page > 0 %}
+        
+            <li class = "pull-left"><a href ="?page={{prev_page}}">&laquo; Previous</a></li>
+        {% end %}
+        
+        {% if next_page > 0 %}
+            <li class = "pull-right"><a href = "?page={{next_page}}">Next &raquo;</a></li>
+        {% end %} 
+    </ul>
+
+<div class="modal fade" id="publish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Book</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="POST" action="" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="add">
+                    <div class="form-group">
+                        <label>Title <small>Required</small></label>
+                        <input type="title" name="title" class="form-control" placeholder="Title" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label>Author <small>Required</small></label>
+                        <input type="author" name="author" class="form-control" placeholder="Author" required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Year Published</label>
+                            <select name="year" class="form-control">
+                                <script type="text/javascript" charset="utf-8">
+                                    var time = new Date();
+                                    var year = time.getYear();
+                                    if (year < 1900) {
+                                        year = year + 1900;
+                                    }
+                                    var date = year - 101; 
+                                    var future = year+1 
+                                    
+                                    do {
+                                        future--;
+                                        document.write ("<OPTION value=\"" +future+"\">" +future+ "");
+                                    }
+                                    while (date < future)
+                                    today =new Date();
+                                    y0 = today.getFullYear();
+                                </script>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>ISBN</label>
+                            <input type="ISBN" name="isbn" class="form-control" placeholder="ISBN" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Publisher</label>
+                        <input type="publisher" name="publisher" class="form-control" placeholder="Publisher" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Excerpt <small>100 - 150 words</small></label>
+                        <textarea class="form-control" rows="6" name="excerpt"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose file</label>
+                        <input type="file" name="file" id="file" value="" accept="application/pdf" class="form-control" required>
+                    </div>
+                    <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
